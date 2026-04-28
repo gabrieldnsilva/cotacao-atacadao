@@ -27,6 +27,7 @@ spl_autoload_register(function ($class) {
 use App\Core\Database;
 use App\Services\AuthService;
 use App\Services\CsvImportService;
+use App\Models\CatalogModel;
 use App\Controllers\AuthController;
 use App\Controllers\CatalogController;
 
@@ -49,6 +50,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $db = Database::getInstance();
 $authService = new AuthService($db);
 $csvService = new CsvImportService($db);
+$catalogModel = new CatalogModel($db);
 
 // --- API Routing ---
 
@@ -80,7 +82,12 @@ if ($method === 'GET' && $uri === '/api/auth/status') {
 }
 
 // Catalog Routes
-$catalogController = new CatalogController($csvService, $authService);
+$catalogController = new CatalogController($csvService, $authService, $catalogModel);
+
+if ($method === 'GET' && $uri === '/api/catalog') {
+    $catalogController->search();
+    exit();
+}
 
 if ($method === 'POST' && $uri === '/api/catalog/upload') {
     $catalogController->upload();

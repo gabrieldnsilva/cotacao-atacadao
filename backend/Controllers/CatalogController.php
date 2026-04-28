@@ -4,14 +4,32 @@ namespace App\Controllers;
 
 use App\Services\CsvImportService;
 use App\Services\AuthService;
+use App\Models\CatalogModel;
 
 class CatalogController {
     private CsvImportService $csvService;
     private AuthService $authService;
+    private CatalogModel $catalogModel;
 
-    public function __construct(CsvImportService $csvService, AuthService $authService) {
+    public function __construct(CsvImportService $csvService, AuthService $authService, CatalogModel $catalogModel) {
         $this->csvService = $csvService;
         $this->authService = $authService;
+        $this->catalogModel = $catalogModel;
+    }
+
+    /**
+     * Search products in the catalog.
+     */
+    public function search() {
+        $query = $_GET['search'] ?? '';
+        
+        if (strlen($query) < 2) {
+            echo json_encode([]);
+            return;
+        }
+
+        $results = $this->catalogModel->search($query);
+        echo json_encode($results);
     }
 
     /**

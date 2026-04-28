@@ -33,7 +33,7 @@ class Database {
                 header('Content-Type: application/json', true, 500);
                 echo json_encode([
                     "success" => false, 
-                    "message" => "Database connection error."
+                    "message" => "Database connection error: " . $e->getMessage()
                 ]);
                 exit();
             }

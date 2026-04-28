@@ -6,7 +6,7 @@
  */
 
 // Database Credentials
-define("DB_HOST", "localhost");
+define("DB_HOST", "127.0.0.1");
 define("DB_NAME", "atc_portal");
 define("DB_USER", "filial945");
 define("DB_PASS", "senhafilial");

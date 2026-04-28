@@ -3,6 +3,31 @@
  * Front Controller - Cotação Online Atacadão
  */
 
+// Start native PHP session
+session_start();
+
+// Autoloader for App namespace
+spl_autoload_register(function ($class) {
+    $prefix = 'App\\';
+    $base_dir = __DIR__ . '/backend/';
+
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+
+    $relative_class = substr($class, $len);
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
+use App\Core\Database;
+use App\Services\AuthService;
+use App\Controllers\AuthController;
+
 // Basic CORS and Headers
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
@@ -18,7 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Simple Routing
+// Initialize Core Dependencies
+$db = Database::getInstance();
+$authService = new AuthService($db);
+
+// --- API Routing ---
+
+// Health Check
 if ($method === 'GET' && $uri === '/api/health') {
     echo json_encode([
         "status" => "ok",
@@ -26,6 +57,26 @@ if ($method === 'GET' && $uri === '/api/health') {
     ]);
     exit();
 }
+
+// Authentication Routes
+$authController = new AuthController($authService);
+
+if ($method === 'POST' && $uri === '/api/login') {
+    $authController->login();
+    exit();
+}
+
+if ($method === 'POST' && $uri === '/api/logout') {
+    $authController->logout();
+    exit();
+}
+
+if ($method === 'GET' && $uri === '/api/auth/status') {
+    $authController->status();
+    exit();
+}
+
+// --- Frontend Routing ---
 
 // Serve frontend/index.html for root or handle 404
 if ($uri === '/' || $uri === '/index.php') {

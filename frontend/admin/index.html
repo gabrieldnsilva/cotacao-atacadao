@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Cotação Online Atacadão</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #27ae60;
+            --brand-secondary: #db7612;
+            --bg-page: #f0f4f8;
+            --bg-surface: #ffffff;
+            --text-main: #2c3e50;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--brand-primary);
+            color: white;
+            padding: 1rem;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #219150;
+        }
+
+        .btn-action {
+            background: linear-gradient(90deg, #db7612, #c66a0f);
+            color: white;
+            font-weight: 700;
+            border: none;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+        }
+
+        #admin-dashboard {
+            display: none;
+            margin-top: 50px;
+        }
+
+        #login-section {
+            display: none;
+        }
+
+        .upload-area {
+            border: 2px dashed #ddd;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--brand-primary);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-overlay" id="loading">
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">ATACADÃO - PAINEL ADMIN</span>
+            <button id="logout-btn" class="btn btn-outline-light btn-sm" style="display: none;">Sair</button>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <div class="container" id="login-section">
+        <div class="login-container">
+            <div class="card p-4">
+                <h2 class="text-center mb-4" style="color: var(--brand-primary);">Login</h2>
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label class="form-label">Usuário</label>
+                        <input type="text" id="username" class="form-control" required autocomplete="username">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Senha</label>
+                        <input type="password" id="password" class="form-control" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 p-2 mt-2">ENTRAR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div class="container" id="admin-dashboard">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-5">
+                    <h2 class="mb-4">Importação de Catálogo</h2>
+                    <p class="text-muted">Faça o upload do relatório .CSV gerado pelo Job para atualizar o catálogo de produtos e preços.</p>
+                    
+                    <form id="upload-form" class="mt-4">
+                        <div class="upload-area mb-4" onclick="document.getElementById('catalog_csv').click()">
+                            <i class="bi bi-cloud-upload" style="font-size: 2rem;"></i>
+                            <p id="file-name" class="mt-2">Clique aqui para selecionar o arquivo .CSV</p>
+                            <input type="file" id="catalog_csv" name="catalog_csv" accept=".csv" style="display: none;">
+                        </div>
+                        <button type="submit" class="btn btn-action btn-lg w-100">INICIAR IMPORTAÇÃO</button>
+                    </form>
+
+                    <div class="mt-4 p-3 bg-light rounded" style="font-size: 0.9rem;">
+                        <strong>Instruções:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>O arquivo deve ser do tipo CSV delimitado por ponto e vírgula (;).</li>
+                            <li>O sistema extrairá automaticamente as colunas necessárias.</li>
+                            <li>A tabela de catálogo será limpa antes da nova importação.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Libs -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- App Logic -->
+    <script src="../assets/js/admin.js"></script>
+</body>
+</html>

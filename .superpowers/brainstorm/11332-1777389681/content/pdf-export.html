@@ -1,0 +1,62 @@
+<h2>Fluxo de Exportação de PDF (Lado do Cliente)</h2>
+<p class="subtitle">Geração instantânea e fiel à visualização do operador</p>
+
+<div class="mockup">
+  <div class="mockup-header">Interface do Operador (Navegador)</div>
+  <div class="mockup-body">
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+      
+      <!-- Tabela HTML -->
+      <div class="card" style="border: 2px dashed #27ae60;">
+        <div class="label" style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 4px;">DOM Element: #tabela-faturamento</div>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem;">
+          <tr style="background: #f0f4f8;">
+            <th style="border: 1px solid #ddd; padding: 4px;">MERC</th>
+            <th style="border: 1px solid #ddd; padding: 4px;">Descrição</th>
+            <th style="border: 1px solid #ddd; padding: 4px;">Barcode (Libre 39)</th>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 4px;">13263</td>
+            <td style="border: 1px solid #ddd; padding: 4px;">PRODUTO EXEMPLO</td>
+            <td style="border: 1px solid #ddd; padding: 4px; font-family: 'Libre Barcode 39'; font-size: 1.5rem;">*13263172*</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
+        <div style="text-align: center;">
+          <div class="label">1. Capture</div>
+          <div style="font-size: 0.8rem;">html2canvas</div>
+          <div style="font-size: 1.5rem;">📸</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="label">2. PDF Gen</div>
+          <div style="font-size: 0.8rem;">jsPDF</div>
+          <div style="font-size: 1.5rem;">📄</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="label">3. Download</div>
+          <div style="font-size: 0.8rem;">Browser</div>
+          <div style="font-size: 1.5rem;">💾</div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(219, 118, 18, 0.1); border-left: 5px solid #db7612;">
+        <h3>Resultado Final</h3>
+        <p style="font-size: 0.9rem;">O operador baixa um arquivo <code>cotacao_faturamento.pdf</code> gerado localmente em milissegundos, com o layout idêntico à planilha legada.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Benefícios do Client-Side</h4>
+    <ul>
+      <li><b>Velocidade:</b> Sem latência de upload/download para o servidor.</li>
+      <li><b>Escalabilidade:</b> Mil usuários podem gerar PDFs ao mesmo tempo sem afetar o servidor.</li>
+      <li><b>WYSIWYG:</b> "O que você vê é o que você obtém".</li>
+    </ul>
+  </div>
+</div>

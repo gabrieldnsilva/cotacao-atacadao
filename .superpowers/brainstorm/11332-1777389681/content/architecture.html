@@ -1,0 +1,59 @@
+<h2>Arquitetura & Fluxo de Dados (Opção Escolhida: Memória/PDF)</h2>
+<p class="subtitle">Foco em privacidade e simplicidade operacional</p>
+
+<div class="mockup">
+  <div class="mockup-header">Diagrama de Fluxo (MVSC)</div>
+  <div class="mockup-body">
+    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; align-items: flex-start;">
+      
+      <!-- Backend Block -->
+      <div class="card" style="width: 300px;">
+        <div class="label">Backend (PHP 8.1)</div>
+        <h3>Processamento & Catálogo</h3>
+        <ul style="font-size: 0.9rem; text-align: left;">
+          <li><b>Controller:</b> Recebe CSV (Admin) / Fornece JSON (Operador)</li>
+          <li><b>Service:</b> Validação de Dados e Regras de Negócio</li>
+          <li><b>Model:</b> Interface com MariaDB (Apenas Catálogo)</li>
+          <li><b>DB:</b> <code>catalog</code>, <code>admin_users</code></li>
+        </ul>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: center; font-size: 2rem;">→</div>
+
+      <!-- Frontend Block -->
+      <div class="card" style="width: 300px; border-left: 5px solid #db7612;">
+        <div class="label">Frontend (JS Vanilla)</div>
+        <h3>Operação em Sessão</h3>
+        <ul style="font-size: 0.9rem; text-align: left;">
+          <li><b>Storage:</b> <code>sessionStorage</code> (Volátil)</li>
+          <li><b>View:</b> Renderização Dinâmica (Bootstrap/JQuery)</li>
+          <li><b>Export:</b> PDF via <code>jsPDF</code> + <code>html2canvas</code></li>
+          <li><b>Barcode:</b> <code>Libre Barcode 39</code></li>
+        </ul>
+      </div>
+
+    </div>
+    
+    <div class="section" style="margin-top: 20px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+      <p><b>Ciclo de Vida do Pedido:</b> O operador monta o pedido no navegador. Ao clicar em "Gerar Faturamento", o PDF é gerado localmente. <b>Nenhum dado do pedido toca o servidor</b>, garantindo que sessões sejam independentes e efêmeras.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pros-cons">
+  <div class="pros">
+    <h4>Vantagens</h4>
+    <ul>
+      <li>Simplicidade extrema de implementação (YAGNI)</li>
+      <li>Privacidade total dos dados do cliente final</li>
+      <li>Zero impacto de armazenamento no servidor</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Limitações</h4>
+    <ul>
+      <li>Sem histórico de vendas para auditoria</li>
+      <li>Se a aba fechar acidentalmente, o pedido é perdido</li>
+    </ul>
+  </div>
+</div>

@@ -134,8 +134,60 @@ $(document).ready(function () {
         }
     });
 
-    // Generate PDF placeholder
+    // Generate PDF logic
     $('#generate-pdf').on('click', function() {
-        alert('A funcionalidade de exportação de PDF será implementada na Story 1.6.');
+        if (quotationItems.length === 0) {
+            alert('Adicione pelo menos um item para gerar o faturamento.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const $pdfBody = $('#pdf-body');
+        const $pdfContainer = $('#pdf-export-container');
+        
+        $pdfBody.empty();
+        let totalGeral = 0;
+
+        const now = new Date();
+        $('#pdf-date').text(now.toLocaleDateString('pt-BR'));
+        $('#pdf-time').text(now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+
+        quotationItems.forEach(item => {
+            const rowTotal = item.price * item.quantity;
+            totalGeral += rowTotal;
+
+            $pdfBody.append(`
+                <tr>
+                    <td>${item.merc}</td>
+                    <td>${item.digito}</td>
+                    <td>${item.descricao}</td>
+                    <td>${item.embalagem}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td>${rowTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td class="barcode">*${item.merc}${item.digito}*</td>
+                </tr>
+            `);
+        });
+
+        $('#pdf-total').text(`R$ ${totalGeral.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`);
+
+        // Small delay to ensure DOM is updated and font is ready
+        setTimeout(() => {
+            html2canvas(document.querySelector("#pdf-export-container"), {
+                scale: 2, // Higher resolution
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save(`faturamento_${now.getTime()}.pdf`);
+            });
+        }, 500);
     });
 });

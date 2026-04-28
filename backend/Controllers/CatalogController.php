@@ -44,16 +44,24 @@ class CatalogController {
 
         if (!isset($_FILES['catalog_csv'])) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Nenhum arquivo enviado.']);
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Nenhum arquivo enviado ou limite de tamanho excedido.',
+                'debug' => [
+                    'post_size' => $_SERVER['CONTENT_LENGTH'] ?? 'unknown',
+                    'upload_max' => ini_get('upload_max_filesize'),
+                    'post_max' => ini_get('post_max_size')
+                ]
+            ]);
             return;
         }
 
         $file = $_FILES['catalog_csv'];
 
-        // Basic validation
         if ($file['error'] !== UPLOAD_ERR_OK) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Erro no upload do arquivo.']);
+            $errorMsg = $this->getUploadErrorMessage($file['error']);
+            echo json_encode(['success' => false, 'message' => 'Erro no upload: ' . $errorMsg]);
             return;
         }
 
@@ -64,6 +72,19 @@ class CatalogController {
         } else {
             http_response_code(422);
             echo json_encode($result);
+        }
+    }
+
+    private function getUploadErrorMessage($code) {
+        switch ($code) {
+            case UPLOAD_ERR_INI_SIZE: return 'O arquivo excede o limite definido no php.ini (upload_max_filesize).';
+            case UPLOAD_ERR_FORM_SIZE: return 'O arquivo excede o limite definido no formulário HTML.';
+            case UPLOAD_ERR_PARTIAL: return 'O upload foi feito apenas parcialmente.';
+            case UPLOAD_ERR_NO_FILE: return 'Nenhum arquivo foi enviado.';
+            case UPLOAD_ERR_NO_TMP_DIR: return 'Pasta temporária ausente.';
+            case UPLOAD_ERR_CANT_WRITE: return 'Falha ao escrever o arquivo no disco.';
+            case UPLOAD_ERR_EXTENSION: return 'Uma extensão do PHP interrompeu o upload.';
+            default: return 'Erro desconhecido.';
         }
     }
 }

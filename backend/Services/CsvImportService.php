@@ -40,13 +40,17 @@ class CsvImportService {
         }
 
         // Map column names to indices
-        $header = array_map('trim', $header);
+        $header = array_map(function($h) { return trim($h, " \t\n\r\0\x0B"); }, $header);
         $colMap = [];
         foreach ($this->requiredColumns as $col) {
-            $index = array_search($col, $header);
+            $index = array_search(trim($col), $header);
             if ($index === false) {
                 fclose($handle);
-                return ['success' => false, 'message' => "Missing columns: $col"];
+                return [
+                    'success' => false, 
+                    'message' => "Coluna obrigatória ausente no CSV: $col",
+                    'debug_header' => $header
+                ];
             }
             $colMap[$col] = $index;
         }

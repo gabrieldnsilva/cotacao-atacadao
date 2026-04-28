@@ -26,7 +26,9 @@ spl_autoload_register(function ($class) {
 
 use App\Core\Database;
 use App\Services\AuthService;
+use App\Services\CsvImportService;
 use App\Controllers\AuthController;
+use App\Controllers\CatalogController;
 
 // Basic CORS and Headers
 header("Access-Control-Allow-Origin: *");
@@ -46,6 +48,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 // Initialize Core Dependencies
 $db = Database::getInstance();
 $authService = new AuthService($db);
+$csvService = new CsvImportService($db);
 
 // --- API Routing ---
 
@@ -73,6 +76,14 @@ if ($method === 'POST' && $uri === '/api/logout') {
 
 if ($method === 'GET' && $uri === '/api/auth/status') {
     $authController->status();
+    exit();
+}
+
+// Catalog Routes
+$catalogController = new CatalogController($csvService, $authService);
+
+if ($method === 'POST' && $uri === '/api/catalog/upload') {
+    $catalogController->upload();
     exit();
 }
 

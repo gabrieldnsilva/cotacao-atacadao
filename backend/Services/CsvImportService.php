@@ -24,32 +24,38 @@ class CsvImportService {
      */
     public function import(string $filePath): array {
         if (!file_exists($filePath)) {
-            return ['success' => false, 'message' => 'File not found.'];
+            return ['success' => false, 'message' => 'Arquivo físico não encontrado no servidor.'];
         }
 
         $handle = fopen($filePath, 'r');
         if (!$handle) {
-            return ['success' => false, 'message' => 'Could not open file.'];
+            return ['success' => false, 'message' => 'Não foi possível abrir o arquivo para leitura.'];
         }
 
         // Read header
         $header = fgetcsv($handle, 0, ';');
         if (!$header) {
             fclose($handle);
-            return ['success' => false, 'message' => 'Empty CSV file.'];
+            return ['success' => false, 'message' => 'O arquivo CSV está vazio ou o delimitador (;) não foi reconhecido.'];
         }
 
         // Map column names to indices
-        $header = array_map(function($h) { return trim($h, " \t\n\r\0\x0B"); }, $header);
+        $header = array_map(function($h) { 
+            return strtoupper(trim($h, " \t\n\r\0\x0B")); 
+        }, $header);
+        
         $colMap = [];
         foreach ($this->requiredColumns as $col) {
-            $index = array_search(trim($col), $header);
+            $index = array_search(strtoupper(trim($col)), $header);
             if ($index === false) {
                 fclose($handle);
                 return [
                     'success' => false, 
                     'message' => "Coluna obrigatória ausente no CSV: $col",
-                    'debug_header' => $header
+                    'debug' => [
+                        'received_headers' => $header,
+                        'required_column' => $col
+                    ]
                 ];
             }
             $colMap[$col] = $index;
@@ -64,19 +70,29 @@ class CsvImportService {
             $stmt = $this->db->prepare($sql);
 
             $count = 0;
+            $lineNumber = 1;
             while (($row = fgetcsv($handle, 0, ';')) !== false) {
-                if (empty($row[0])) continue; // Skip empty rows
+                $lineNumber++;
+                // Skip if the row doesn't have enough columns or is empty
+                if (count($row) < count($colMap)) continue;
+                if (trim($row[$colMap['MERC']]) === '') continue;
 
                 $stmt->execute([
-                    'merc' => (int)$row[$colMap['MERC']],
-                    'digito' => (int)$row[$colMap['DIGITO']],
+                    'merc' => (int)trim($row[$colMap['MERC']]),
+                    'digito' => (int)trim($row[$colMap['DIGITO']]),
                     'descricao' => trim($row[$colMap['DESCRICAO']]),
                     'embalagem' => trim($row[$colMap['EMBALAGEM']]),
-                    'estoq_emb1' => (int)$row[$colMap['ESTOQ EMB1']],
-                    'estoq_emb9' => (int)$row[$colMap['ESTOQ EMB9']],
+                    'estoq_emb1' => (int)trim($row[$colMap['ESTOQ EMB1']]),
+                    'estoq_emb9' => (int)trim($row[$colMap['ESTOQ EMB9']]),
                     'preco_venda' => $this->parsePrice($row[$colMap['PRECO VENDA']])
                 ]);
                 $count++;
+            }
+
+            if ($count === 0) {
+                $this->db->rollBack();
+                fclose($handle);
+                return ['success' => false, 'message' => 'Nenhum dado válido foi processado do arquivo. Verifique o formato das linhas.'];
             }
 
             $this->db->commit();
@@ -84,9 +100,11 @@ class CsvImportService {
 
             return ['success' => true, 'count' => $count];
         } catch (Exception $e) {
-            $this->db->rollBack();
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
             fclose($handle);
-            return ['success' => false, 'message' => 'Import error: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Erro na inserção de dados: ' . $e->getMessage()];
         }
     }
 

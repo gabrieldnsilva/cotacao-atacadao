@@ -28,5 +28,5 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 -- Initial seed: Default admin user
 -- Password is 'admin123' hashed with password_hash()
 INSERT INTO `admin_users` (`username`, `password`) 
-VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi')
+VALUES ('admin', '$2y$12$aaTWA7nW.wb2YQVvMK.Nz.iKoWE39dP3KkAz39Cy2.1RuxZ0Fkvqu')
 ON DUPLICATE KEY UPDATE `username` = `username`;

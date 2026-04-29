@@ -1,0 +1,105 @@
+/* 🎨 Atacadão Online - Global Design Tokens & Base Styles */
+
+:root {
+    /* Brand Colors */
+    --brand-primary: #27ae60;
+    --brand-secondary: #db7612;
+    
+    /* Background & Surfaces */
+    --bg-page: #f0f4f8;
+    --bg-surface: #ffffff;
+    
+    /* Typography Colors */
+    --text-main: #2c3e50;
+    --text-muted: #6c757d;
+
+    /* Base Layout */
+    --border-radius-base: 8px;
+    --shadow-base: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* 🟢 Navbar Institutional */
+.navbar {
+    background-color: var(--brand-primary);
+    color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* 📄 Cards */
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-base);
+    border-radius: var(--border-radius-base);
+    margin-bottom: 2rem;
+}
+
+/* 🔘 Buttons */
+.btn-primary {
+    background-color: var(--brand-primary);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #219150;
+    color: white;
+}
+
+.btn-action {
+    background: linear-gradient(90deg, #db7612, #c66a0f);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(219, 118, 18, 0.3);
+    transition: opacity 0.2s, box-shadow 0.2s;
+}
+
+.btn-action:hover {
+    opacity: 0.9;
+    color: white;
+    box-shadow: 0 6px 16px rgba(219, 118, 18, 0.4);
+}
+
+.btn-outline-primary {
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    border-width: 2px;
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--brand-primary);
+    color: white;
+}
+
+/* ⚠️ Feedback Alerts (Semantic) */
+.alert-success {
+    border-left: 4px solid #198754;
+}
+
+.alert-info {
+    border-left: 4px solid #0dcaf0;
+}
+
+.alert-danger {
+    border-left: 4px solid #dc3545;
+}

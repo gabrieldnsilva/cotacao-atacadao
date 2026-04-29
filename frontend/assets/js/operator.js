@@ -14,12 +14,14 @@ $(document).ready(function () {
 
         if (query.length < 2) {
             $('#search-results').hide();
+            $(this).attr('aria-expanded', 'false');
             return;
         }
 
         searchTimeout = setTimeout(() => {
             $.get(`../../api/catalog?search=${encodeURIComponent(query)}`, function (products) {
                 renderSearchResults(products);
+                $('#product-search').attr('aria-expanded', products.length > 0 ? 'true' : 'false');
             });
         }, 300);
     });
@@ -29,11 +31,11 @@ $(document).ready(function () {
         $results.empty();
 
         if (products.length === 0) {
-            $results.append('<div class="search-item text-muted">Nenhum produto encontrado.</div>');
+            $results.append('<div class="search-item text-muted" role="option">Nenhum produto encontrado.</div>');
         } else {
             products.forEach(p => {
                 const $item = $(`
-                    <div class="search-item">
+                    <div class="search-item" role="option">
                         <strong>${p.merc}-${p.digito}</strong> | ${p.descricao} | 
                         <span class="text-success">R$ ${parseFloat(p.preco_venda).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
                     </div>
@@ -77,6 +79,16 @@ $(document).ready(function () {
         }
     };
 
+    window.updatePrice = function (merc, digito, newPrice) {
+        const item = quotationItems.find(i => i.merc == merc && i.digito == digito);
+        if (item) {
+            // Replace comma with dot for calculation
+            const price = parseFloat(newPrice.toString().replace(',', '.')) || 0;
+            item.price = price;
+            saveAndRender();
+        }
+    };
+
     window.removeItem = function (merc, digito) {
         quotationItems = quotationItems.filter(i => !(i.merc == merc && i.digito == digito));
         saveAndRender();
@@ -113,12 +125,23 @@ $(document).ready(function () {
                     <td>
                         <input type="number" class="form-control form-control-sm" 
                                value="${item.quantity}" 
+                               aria-label="Quantidade para ${item.descricao}"
                                onchange="updateQuantity(${item.merc}, ${item.digito}, this.value)">
                     </td>
-                    <td>R$ ${item.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="me-1 text-muted" aria-hidden="true">R$</span>
+                            <input type="text" class="price-input" 
+                                   value="${item.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}" 
+                                   aria-label="Preço unitário para ${item.descricao}"
+                                   onchange="updatePrice(${item.merc}, ${item.digito}, this.value)">
+                        </div>
+                    </td>
                     <td><strong>R$ ${rowTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</strong></td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-outline-danger" onclick="removeItem(${item.merc}, ${item.digito})">Remover</button>
+                        <button class="btn btn-sm btn-outline-danger" 
+                                aria-label="Remover ${item.descricao}"
+                                onclick="removeItem(${item.merc}, ${item.digito})">Remover</button>
                     </td>
                 </tr>
             `);
@@ -131,6 +154,7 @@ $(document).ready(function () {
     $(document).on('click', function (e) {
         if (!$(e.target).closest('#product-search, #search-results').length) {
             $('#search-results').hide();
+            $('#product-search').attr('aria-expanded', 'false');
         }
     });
 

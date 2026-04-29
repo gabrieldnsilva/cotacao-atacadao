@@ -3,116 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operador - Cotação Online Atacadão</title>
+    <title>Atacadão Cotações - Operação</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="../assets/css/operator.css">
 </head>
-<body>
+<body class="operator-page">
 
-    <nav class="navbar">
-        <div class="container">
-            <span class="navbar-brand mb-0 h1">ATACADÃO - COTAÇÃO ONLINE</span>
-            <div class="d-flex align-items-center">
-                <small id="current-date"></small>
+    <main class="container-fluid p-4 md:p-5 max-w-[1440px] mx-auto">
+        
+        <!-- Header Branding -->
+        <header class="operator-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-4">
+            <a href="/admin/index.html" class="brand-lockup">
+                <div class="brand-logo-a">A</div>
+                <div class="d-flex flex-column">
+                    <span class="brand-text-main">ATACADÃO</span>
+                    <span class="brand-text-sub">Cotações</span>
+                </div>
+            </a>
+            <h1 class="page-title">PEDIDO PARA FATURAR</h1>
+        </header>
+
+        <!-- Context Bar -->
+        <div class="context-bar">
+            <div class="context-info-card">
+                <div class="context-item"><span class="context-label">CLIENTE:</span> <span id="client-name">Supermercado Central Ltda</span></div>
+                <div class="context-item"><span class="context-label">QUANTIDADE CUPOM:</span> 1</div>
+                <div class="context-item"><span class="context-label">DATA:</span> <span id="current-date"></span></div>
+            </div>
+            <div class="status-badge-info">
+                <ion-icon name="information-circle" class="text-info" style="font-size: 1.5rem;"></ion-icon>
+                <span id="status-text">Aguardando inserção de itens.</span>
             </div>
         </div>
-    </nav>
 
-    <div class="container">
-        <!-- Search Section -->
-        <div class="card p-4">
-            <h3>Buscar Produto</h3>
-            <div class="position-relative">
-                <input type="text" id="product-search" class="form-control form-control-lg" 
-                       placeholder="Digite o código (MERC) ou nome do produto..."
-                       aria-label="Buscar produtos no catálogo"
-                       aria-autocomplete="list"
-                       aria-expanded="false"
-                       aria-haspopup="listbox">
-                <div id="search-results" class="search-results" role="listbox" aria-label="Resultados da busca"></div>
-            </div>
-        </div>
+        <!-- Input Area Section -->
+        <section class="input-section">
+            <form id="add-item-form" class="row g-4 align-items-end">
+                <div class="col-md-8">
+                    <label class="form-label font-weight-bold text-uppercase small">Código (MERC) / Busca por Nome</label>
+                    <div class="search-container">
+                        <ion-icon name="search-outline" class="search-icon-inside"></ion-icon>
+                        <input type="text" id="product-search" class="form-control form-control-lg operator-input" 
+                               placeholder="Ex: 7891010101010" 
+                               autocomplete="off"
+                               aria-label="Buscar produtos"
+                               aria-autocomplete="list"
+                               aria-expanded="false"
+                               aria-haspopup="listbox">
+                        <div id="search-results" class="search-results" role="listbox"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label font-weight-bold text-uppercase small">Quantidade</label>
+                    <input type="number" id="quick-qty" class="form-control form-control-lg text-center font-weight-bold operator-input" style="padding-left: 1rem;" value="1" min="1">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" id="clear-quotation" class="btn btn-outline-danger w-100 py-3 d-flex align-items-center justify-content-center gap-2 font-weight-bold">
+                        <ion-icon name="trash-outline"></ion-icon>
+                        LIMPAR
+                    </button>
+                </div>
+            </form>
+        </section>
 
-        <!-- Items Table -->
-        <div class="card p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3>Itens da Cotação</h3>
-                <button id="clear-quotation" class="btn btn-outline-danger btn-sm">Limpar Cotação</button>
-            </div>
-            
+        <!-- Operational Table Section -->
+        <section class="table-card">
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr class="table-header">
+                <table class="table table-hover operator-table align-middle mb-0">
+                    <thead>
+                        <tr>
                             <th>MERC</th>
                             <th>DIG</th>
                             <th>DESCRIÇÃO</th>
-                            <th>EMBALAGEM</th>
-                            <th style="width: 100px;">QTD</th>
-                            <th>VALOR UNIT.</th>
-                            <th>TOTAL</th>
+                            <th class="text-center">EMBALAGEM</th>
+                            <th class="text-center" style="width: 120px;">QTD VENDA</th>
+                            <th class="text-center" style="width: 140px;">VALOR UNIT.</th>
+                            <th class="text-right" style="width: 140px;">R$ TOTAL</th>
+                            <th class="text-center">CÓD. BARRAS</th>
                             <th class="text-center">AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody id="quotation-body">
-                        <!-- Items will be injected here -->
+                        <!-- Items injected here -->
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="6" class="text-end align-middle"><strong>TOTAL GERAL:</strong></td>
-                            <td id="total-row" colspan="2">R$ 0,00</td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
 
-            <div class="text-end mt-4">
-                <button id="generate-pdf" class="btn btn-action btn-lg px-5">GERAR FATURAMENTO (PDF)</button>
+            <!-- Table Footer / Totals -->
+            <div class="table-footer-stats">
+                <div class="d-flex gap-3">
+                    <span class="badge bg-light text-dark border p-2 text-uppercase" style="letter-spacing: 0.5px;"><span id="items-count">0</span> Itens</span>
+                    <span class="badge bg-light text-dark border p-2 text-uppercase" style="letter-spacing: 0.5px;"><span id="units-count">0</span> Unidades Totais</span>
+                </div>
+                
+                <div class="d-flex align-items-center gap-4">
+                    <div class="total-display-box rounded">
+                        <span class="total-label">TOTAL:</span>
+                        <span id="total-row" class="total-value">R$ 0,00</span>
+                    </div>
+                    <button id="generate-pdf" class="btn btn-action btn-lg px-5 py-3 d-flex align-items-center gap-2">
+                        <ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon>
+                        GERAR PDF PARA FATURAMENTO
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+    </main>
 
     <!-- PDF Hidden Template -->
     <div id="pdf-export-container">
-        <div class="pdf-header">
-            <div>
-                <h2 style="margin: 0; color: #27ae60;">ATACADÃO</h2>
-                <p style="margin: 0; font-size: 14px;">PEDIDO PARA FATURAR</p>
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-success border-4 pb-3">
+            <div class="d-flex align-items-center gap-3">
+                <div style="font-size: 2.5rem; font-weight: 900; color: #db7612;">A</div>
+                <div class="d-flex flex-column">
+                    <span style="font-size: 1.5rem; font-weight: 900; color: #27ae60;">ATACADÃO</span>
+                    <span style="font-size: 0.75rem; font-weight: 700; color: #db7612;">Cotações</span>
+                </div>
             </div>
-            <div style="text-align: right;">
-                <p id="pdf-date" style="margin: 0; font-size: 12px;"></p>
-                <p id="pdf-time" style="margin: 0; font-size: 12px; font-weight: bold;"></p>
-            </div>
+            <h2 style="font-weight: 800; text-transform: uppercase; margin: 0;">PEDIDO PARA FATURAR</h2>
         </div>
         
-        <table class="pdf-table">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Dig</th>
+        <div class="mb-4 p-3 border rounded d-flex gap-5 text-uppercase small font-weight-bold bg-light">
+            <span>CLIENTE: <span id="pdf-client">Supermercado Central Ltda</span></span>
+            <span>DATA: <span id="pdf-date"></span> <span id="pdf-time"></span></span>
+        </div>
+
+        <table class="table table-bordered border-dark table-sm small">
+            <thead class="table-light">
+                <tr class="text-uppercase" style="font-size: 10px;">
+                    <th>MERC</th>
+                    <th>DIG</th>
                     <th>Descrição</th>
                     <th>Embalagem</th>
-                    <th>Qtd</th>
-                    <th>Valor</th>
-                    <th>Total</th>
-                    <th>Cód. Barras</th>
+                    <th class="text-center">Qtd</th>
+                    <th class="text-center">Valor</th>
+                    <th class="text-right">Total</th>
+                    <th class="text-center">Cód. Barras</th>
                 </tr>
             </thead>
-            <tbody id="pdf-body">
-                <!-- Items will be injected here -->
-            </tbody>
+            <tbody id="pdf-body"></tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6" style="text-align: right; font-weight: bold;">TOTAL:</td>
-                    <td id="pdf-total" style="font-weight: bold;"></td>
-                    <td></td>
+                    <td colspan="6" class="text-end font-weight-bold bg-light">TOTAL DO PEDIDO:</td>
+                    <td id="pdf-total" class="text-right font-weight-bold" style="background: #fef08a;"></td>
+                    <td class="bg-light"></td>
                 </tr>
             </tfoot>
         </table>
@@ -131,7 +177,7 @@
 
     <script>
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR', {
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
     </script>
 </body>

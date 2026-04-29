@@ -32,6 +32,8 @@
 ## 📝 Log de Alterações Recentes
 
 ### 2026-04-28
+- **Refactor (UI):** Redesign completo do Módulo Operador (`operador/index.html`) com layout de alta fidelidade, cabeçalho institucional (BrandLockup), barra de contexto e tabela operacional avançada. Integração de `ionicons` e debounce na busca.
+- **Refactor (UI):** Redesign completo do Dashboard Administrativo (`admin/index.html`) com Sidebar, Navbar fixa, e cards informativos. Integração de `ionicons` e fonte `Inter`.
 - **Refactor (UI):** Redesign completo da Landing Page (`index.html`) utilizando a fonte `Inter`, estrutura Bento Grid e Hero section institucional, traduzindo o protótipo Tailwind para CSS puro em `home.css`.
 - **Feature (UX):** Implementado preço unitário editável na tabela do operador com recálculo em tempo real e feedback visual de campo editável.
 - **Refactor (UI):** Criação da estrutura de CSS global (`global.css`, `admin.css`, `operator.css`, `home.css`) e limpeza dos arquivos HTML (`index.html`, `admin/index.html`, `operador/index.html`).

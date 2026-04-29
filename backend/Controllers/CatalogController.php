@@ -29,7 +29,20 @@ class CatalogController {
         }
 
         $results = $this->catalogModel->search($query);
-        echo json_encode($results);
+        
+        ob_clean();
+        echo json_encode($results ?: []);
+    }
+
+    public function stats() {
+        $stats = $this->catalogModel->getStats();
+        
+        ob_clean();
+        echo json_encode([
+            'total' => (int)($stats['total'] ?? 0),
+            'last_update' => $stats['last_update'] ?? 'Nunca',
+            'status' => 'online'
+        ]);
     }
 
     /**

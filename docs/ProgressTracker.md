@@ -32,6 +32,11 @@
 ## 📝 Log de Alterações Recentes
 
 ### 2026-04-28
+- **Feature (Dashboard):** Implementadas estatísticas em tempo real no Dashboard Admin. Cards de "Total de Itens", "Última Atualização" e "Status do Banco" agora consomem dados reais via API `/api/catalog/stats`.
+- **Perf (PDF):** Otimizada geração de faturamento. Redução de tamanho de 10MB+ para ~500KB via compressão JPEG (0.7) e redução de escala de captura.
+- **Feature (UX):** Campo de "Cliente" agora é editável na barra de contexto do operador, refletindo no PDF final.
+- **UX (Print):** Aumentado tamanho da fonte do código de barras (32px) e tabelas no PDF para garantir leitura via scanner.
+- **Fix:** Corrigida regressão `TypeError: products.forEach is not a function` no módulo operador. API agora força retorno de array vazio e JS possui verificação defensiva `Array.isArray`.
 - **Refactor (UI):** Redesign completo do Módulo Operador (`operador/index.html`) com layout de alta fidelidade, cabeçalho institucional (BrandLockup), barra de contexto e tabela operacional avançada. Integração de `ionicons` e debounce na busca.
 - **Refactor (UI):** Redesign completo do Dashboard Administrativo (`admin/index.html`) com Sidebar, Navbar fixa, e cards informativos. Integração de `ionicons` e fonte `Inter`.
 - **Refactor (UI):** Redesign completo da Landing Page (`index.html`) utilizando a fonte `Inter`, estrutura Bento Grid e Hero section institucional, traduzindo o protótipo Tailwind para CSS puro em `home.css`.

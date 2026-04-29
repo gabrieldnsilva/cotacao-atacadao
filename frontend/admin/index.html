@@ -1,89 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração - Cotação Online Atacadão</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Atacadão Admin - Gestão de Catálogo</title>
 
-    <div class="loading-overlay" id="loading">
-        <div class="spinner-border text-success" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
+		<!-- Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+			rel="stylesheet" />
 
-    <nav class="navbar">
-        <div class="container">
-            <span class="navbar-brand mb-0 h1">ATACADÃO - PAINEL ADMIN</span>
-            <button id="logout-btn" class="btn btn-outline-light btn-sm" style="display: none;">Sair</button>
-        </div>
-    </nav>
+		<!-- Icons -->
+		<script
+			type="module"
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+		<script
+			nomodule
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <!-- Login Section -->
-    <div class="container" id="login-section">
-        <div class="login-container">
-            <div class="card p-4">
-                <h2 class="text-center mb-4" style="color: var(--brand-primary);">Login</h2>
-                <form id="login-form">
-                    <div class="mb-3">
-                        <label class="form-label">Usuário</label>
-                        <input type="text" id="username" class="form-control" required autocomplete="username">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Senha</label>
-                        <input type="password" id="password" class="form-control" required autocomplete="current-password">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 p-2 mt-2">ENTRAR</button>
-                </form>
-            </div>
-        </div>
-    </div>
+		<!-- CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+			rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/css/global.css" />
+		<link rel="stylesheet" href="../assets/css/admin.css" />
+	</head>
+	<body class="admin-page">
+		<div class="loading-overlay" id="loading">
+			<div class="spinner-border text-success" role="status">
+				<span class="visually-hidden">Processando...</span>
+			</div>
+		</div>
 
-    <!-- Dashboard Section -->
-    <div class="container" id="admin-dashboard">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card p-5">
-                    <h2 class="mb-4">Importação de Catálogo</h2>
-                    <p class="text-muted">Faça o upload do relatório .CSV gerado pelo Job para atualizar o catálogo de produtos e preços.</p>
-                    
-                    <form id="upload-form" class="mt-4">
-                        <div class="upload-area mb-4" onclick="document.getElementById('catalog_csv').click()">
-                            <i class="bi bi-cloud-upload" style="font-size: 2rem;"></i>
-                            <p id="file-name" class="mt-2">Clique aqui para selecionar o arquivo .CSV</p>
-                            <input type="file" id="catalog_csv" name="catalog_csv" accept=".csv" style="display: none;">
-                        </div>
-                        <button type="submit" class="btn btn-action btn-lg w-100">INICIAR IMPORTAÇÃO</button>
-                    </form>
+		<!-- Login Section -->
+		<div class="container" id="login-section">
+			<div class="login-container">
+				<div class="card p-5 border-0 shadow-lg">
+					<div class="text-center mb-5">
+						<h1 class="navbar-brand-admin" style="font-size: 2rem">
+							ATACADÃO ADMIN
+						</h1>
+						<p class="text-muted">Acesse o portal de gestão</p>
+					</div>
 
-                    <div class="mt-4 p-3 bg-light rounded" style="font-size: 0.9rem;">
-                        <strong>Instruções:</strong>
-                        <ul class="mb-0 mt-2">
-                            <li>O arquivo deve ser do tipo CSV delimitado por ponto e vírgula (;).</li>
-                            <li>O sistema extrairá automaticamente as colunas necessárias.</li>
-                            <li>A tabela de catálogo será limpa antes da nova importação.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					<form id="login-form">
+						<div class="mb-3">
+							<label class="form-label font-weight-bold"
+								>Usuário</label
+							>
+							<div class="input-group">
+								<span class="input-group-text bg-light border-0"
+									><ion-icon name="person-outline"></ion-icon
+								></span>
+								<input
+									type="text"
+									id="username"
+									class="form-control bg-light border-0"
+									required
+									autocomplete="username" />
+							</div>
+						</div>
+						<div class="mb-4">
+							<label class="form-label font-weight-bold"
+								>Senha</label
+							>
+							<div class="input-group">
+								<span class="input-group-text bg-light border-0"
+									><ion-icon
+										name="lock-closed-outline"></ion-icon
+								></span>
+								<input
+									type="password"
+									id="password"
+									class="form-control bg-light border-0"
+									required
+									autocomplete="current-password" />
+							</div>
+						</div>
+						<button
+							type="submit"
+							class="btn btn-primary w-100 py-3 shadow-sm">
+							ENTRAR NO SISTEMA
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
 
-    <!-- JS Libs -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <!-- App Logic -->
-    <script src="../assets/js/admin.js"></script>
-</body>
+		<!-- Dashboard Section -->
+		<div id="admin-dashboard">
+			<!-- Top Navbar -->
+			<header class="admin-navbar">
+				<div class="d-flex align-items-center gap-3">
+					<span class="navbar-brand-admin">Atacadão Admin</span>
+				</div>
+				<div class="d-flex align-items-center gap-3">
+					<div
+						class="d-flex align-items-center gap-2 bg-light px-3 py-1.5 rounded-pill border border-success border-opacity-25 shadow-sm text-sm">
+						<span
+							class="w-2 h-2 rounded-circle bg-success d-inline-block animate-pulse"></span>
+						<span
+							class="font-medium text-success"
+							style="font-size: 0.85rem"
+							>Sistema Operante</span
+						>
+					</div>
+					<button
+						id="logout-btn"
+						class="btn btn-link text-danger d-flex align-items-center gap-1 text-decoration-none font-weight-bold">
+						<ion-icon name="log-out-outline"></ion-icon>
+						Sair
+					</button>
+				</div>
+			</header>
+
+			<div class="dashboard-wrapper">
+				<!-- Sidebar -->
+				<nav class="admin-sidebar">
+					<div class="sidebar-profile">
+						<div class="profile-img">
+							<ion-icon
+								name="person-circle-outline"
+								class="w-100 h-100 object-cover"></ion-icon>
+						</div>
+						<div class="profile-info">
+							<div class="profile-name">Administrador</div>
+							<div class="profile-role">Filial #945</div>
+						</div>
+					</div>
+
+					<div class="sidebar-nav">
+						<a href="#" class="nav-link-admin active">
+							<ion-icon name="cloud-upload-outline"></ion-icon>
+							<span>Upload de Catálogo</span>
+						</a>
+						<!-- Temporariamente Desativado -->
+						<a href="#" class="nav-link-admin" hidden>
+							<ion-icon name="list-outline"></ion-icon>
+							<span>Ver Catálogo</span>
+						</a>
+						<!-- Temporariamente Desativado -->
+						<a href="#" class="nav-link-admin" hidden>
+							<ion-icon name="stats-chart-outline"></ion-icon>
+							<span>Relatórios</span>
+						</a>
+						<a href="#" class="nav-link-admin" hidden>
+							<ion-icon name="settings-outline"></ion-icon>
+							<span>Configurações</span>
+						</a>
+					</div>
+
+					<div class="sidebar-footer">
+						<button
+							class="btn btn-action w-100 py-2 d-flex align-items-center justify-content-center gap-2"
+							disabled>
+							<ion-icon name="logo-tux"></ion-icon>
+							Atacadão
+						</button>
+					</div>
+				</nav>
+
+				<!-- Main Content -->
+				<main class="admin-main">
+					<div class="admin-content-inner">
+						<div
+							class="d-flex justify-content-between align-items-end mb-5 border-bottom pb-4">
+							<div>
+								<h2 class="font-weight-black text-dark mb-1">
+									Gestão de Catálogo
+								</h2>
+								<p class="text-muted mb-0">
+									Importe e atualize o banco de dados de
+									produtos.
+								</p>
+							</div>
+						</div>
+
+						<!-- Summary Cards -->
+						<div class="stats-grid">
+							<div class="stat-card">
+								<div class="stat-label">Total de Itens</div>
+								<div class="stat-value" id="stat-total-items">0</div>
+							</div>
+							<div class="stat-card">
+								<div class="stat-label">Última Atualização</div>
+								<div
+									class="stat-value"
+									style="font-size: 1.1rem"
+									id="stat-last-update">
+									Nunca
+								</div>
+							</div>
+							<div class="stat-card info">
+								<div class="stat-label">Status do Banco</div>
+								<div
+									class="stat-value d-flex align-items-center gap-2"
+									id="stat-db-status">
+									Sincronizado
+									<ion-icon
+										name="checkmark-circle"
+										class="text-info"></ion-icon>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<!-- Upload Section -->
+							<div class="col-lg-8">
+								<div class="card p-4 h-100 border-0 shadow-sm">
+									<h4 class="mb-4">Importação de Dados</h4>
+									<form id="upload-form">
+										<div
+											class="upload-area mb-4"
+											onclick="
+												document
+													.getElementById(
+														'catalog_csv',
+													)
+													.click()
+											">
+											<ion-icon
+												name="cloud-upload"
+												class="upload-icon"></ion-icon>
+											<h5 id="file-name" class="mb-2">
+												Clique aqui para selecionar o
+												arquivo .CSV
+											</h5>
+											<p class="text-muted small">
+												Tamanho máximo: 10MB
+											</p>
+											<input
+												type="file"
+												id="catalog_csv"
+												name="catalog_csv"
+												accept=".csv"
+												style="display: none" />
+										</div>
+										<button
+											type="submit"
+											class="btn btn-action btn-lg w-100 py-3 d-flex align-items-center justify-content-center gap-2">
+											<ion-icon
+												name="play-outline"></ion-icon>
+											INICIAR IMPORTAÇÃO
+										</button>
+									</form>
+								</div>
+							</div>
+
+							<!-- Requirements Section -->
+							<div class="col-lg-4">
+								<div
+									class="card p-4 h-100 border-0 shadow-sm bg-light">
+									<h5
+										class="mb-4 d-flex align-items-center gap-2">
+										<ion-icon
+											name="information-circle"
+											class="text-info"></ion-icon>
+										Colunas Obrigatórias
+									</h5>
+									<ul class="list-unstyled mb-0">
+										<li
+											class="d-flex justify-content-between py-2 border-bottom">
+											<strong>MERC</strong>
+											<span class="text-muted"
+												>Cód. Interno</span
+											>
+										</li>
+										<li
+											class="d-flex justify-content-between py-2 border-bottom">
+											<strong>DIGITO</strong>
+											<span class="text-muted"
+												>Verificador</span
+											>
+										</li>
+										<li
+											class="d-flex justify-content-between py-2 border-bottom">
+											<strong>DESCRICAO</strong>
+											<span class="text-muted">Nome</span>
+										</li>
+										<li
+											class="d-flex justify-content-between py-2 border-bottom">
+											<strong>EMBALAGEM</strong>
+											<span class="text-muted">Tipo</span>
+										</li>
+										<li
+											class="d-flex justify-content-between py-2">
+											<strong>PRECO VENDA</strong>
+											<span class="text-muted"
+												>Valor R$</span
+											>
+										</li>
+									</ul>
+									<div
+										class="mt-4 p-3 bg-white rounded border small">
+										<ion-icon
+											name="warning-outline"
+											class="text-warning"></ion-icon>
+										O arquivo deve ser CSV delimitado por
+										<strong>ponto e vírgula (;)</strong>.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+
+		<!-- JS Libs -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<!-- App Logic -->
+		<script src="../assets/js/admin.js"></script>
+	</body>
 </html>

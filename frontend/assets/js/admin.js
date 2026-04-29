@@ -26,6 +26,27 @@ $(document).ready(function () {
         $('#login-section').hide();
         $('#admin-dashboard').fadeIn();
         $('#logout-btn').show();
+        loadDashboardStats();
+    }
+
+    function loadDashboardStats() {
+        $.get('../../api/catalog/stats', function (res) {
+            $('#stat-total-items').text(res.total.toLocaleString('pt-BR'));
+            
+            if (res.last_update && res.last_update !== 'Nunca') {
+                const date = new Date(res.last_update);
+                $('#stat-last-update').text(date.toLocaleString('pt-BR'));
+            } else {
+                $('#stat-last-update').text('Nunca');
+            }
+
+            if (res.status === 'online') {
+                $('#stat-db-status').html(`
+                    Online
+                    <ion-icon name="checkmark-circle" class="text-success"></ion-icon>
+                `);
+            }
+        });
     }
 
     $('#login-form').on('submit', function (e) {
@@ -101,6 +122,7 @@ $(document).ready(function () {
                 });
                 $('#upload-form')[0].reset();
                 $('#file-name').text('Clique aqui para selecionar o arquivo .CSV');
+                loadDashboardStats();
             },
             error: function (xhr) {
                 $('#loading').hide();

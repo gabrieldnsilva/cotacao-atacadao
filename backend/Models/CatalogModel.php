@@ -33,6 +33,15 @@ class CatalogModel {
     }
 
     /**
+     * Get catalog statistics (total items and last update).
+     */
+    public function getStats(): array {
+        $sql = "SELECT COUNT(*) as total, MAX(updated_at) as last_update FROM catalog";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetch();
+    }
+
+    /**
      * Get a single product by MERC and Digito.
      */
     public function getByMerc(int $merc, int $digito): ?array {

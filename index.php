@@ -96,6 +96,11 @@ if ($method === 'GET' && $uri === '/api/catalog') {
     exit();
 }
 
+if ($method === 'GET' && $uri === '/api/catalog/stats') {
+    $catalogController->stats();
+    exit();
+}
+
 if ($method === 'POST' && $uri === '/api/catalog/upload') {
     $catalogController->upload();
     exit();

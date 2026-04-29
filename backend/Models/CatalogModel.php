@@ -20,11 +20,14 @@ class CatalogModel {
     public function search(string $query): array {
         $sql = "SELECT merc, digito, descricao, embalagem, preco_venda 
                 FROM catalog 
-                WHERE merc LIKE :query OR descricao LIKE :query 
+                WHERE merc LIKE :query_merc OR descricao LIKE :query_desc 
                 LIMIT 20";
         
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['query' => "%$query%"]);
+        $stmt->execute([
+            'query_merc' => "%$query%",
+            'query_desc' => "%$query%"
+        ]);
         
         return $stmt->fetchAll();
     }

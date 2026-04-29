@@ -3,6 +3,13 @@
  * Front Controller - Cotação Online Atacadão
  */
 
+// Production settings: hide notices and warnings from output
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+ini_set('display_errors', 0);
+
+// Start output buffering to prevent header issues and clean output
+ob_start();
+
 // Start native PHP session
 session_start();
 

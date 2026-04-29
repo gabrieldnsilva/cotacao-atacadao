@@ -67,6 +67,7 @@ class CatalogController {
 
         $result = $this->csvService->import($file['tmp_name']);
 
+        ob_clean();
         if ($result['success']) {
             echo json_encode($result);
         } else {

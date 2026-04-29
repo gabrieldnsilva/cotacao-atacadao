@@ -122,11 +122,3 @@ A tipografia baseada na **Montserrat** confere uma legibilidade moderna a dados 
 | Mobile | <768px | Branding oculto, formulários ocupam 100% da largura. |
 | Tablet/Small Desktop | 768px - 1024px | Layout de 2 colunas preservado. |
 | Large Desktop | >1024px | Conteúdo centralizado com margens amplas para foco. |
-
-## 9. Agent Prompt Guide (For AI Development)
-
-### Component Creation Prompts
-
-- *"Crie uma tabela de faturamento seguindo o DESIGN.md: utilize `--bg-surface` para as linhas, fonte Montserrat 1rem, e destaque a última linha de 'TOTAL' com `--brand-secondary` em negrito."*
-- *"Gere um botão de 'Finalizar Pedido' com o gradiente laranja `--brand-secondary` definido no DESIGN.md e animação de loading `spin` para estados assíncronos."*
-- *"Desenvolva um card de produto com sombra `0 6px 18px rgba(0, 0, 0, 0.08)` e borda de 1px sutil, conforme o padrão de profundidade Level 1."*

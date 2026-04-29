@@ -21,6 +21,7 @@ class AuthController {
 
         $user = $this->authService->authenticate($username, $password);
 
+        ob_clean();
         if ($user) {
             $_SESSION['admin_id'] = $user['id'];
             $_SESSION['admin_user'] = $user['username'];

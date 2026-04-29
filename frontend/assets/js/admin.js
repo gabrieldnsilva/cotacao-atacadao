@@ -104,7 +104,16 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 $('#loading').hide();
-                const msg = xhr.responseJSON ? xhr.responseJSON.message : 'Erro ao processar arquivo.';
+                console.error("Server Response:", xhr.responseText);
+                
+                let msg = 'Erro ao processar arquivo.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    msg = xhr.responseJSON.message;
+                } else if (xhr.responseText) {
+                    // If not JSON, show the first 100 chars of response
+                    msg = 'Erro do Servidor: ' + xhr.responseText.substring(0, 100);
+                }
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Falha na Importação',

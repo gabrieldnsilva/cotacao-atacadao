@@ -7,6 +7,9 @@
 *.key
 *.pem
 
+.vscode/
+
+
 # Dependencies (AIOX)
 node_modules/
 node_modules

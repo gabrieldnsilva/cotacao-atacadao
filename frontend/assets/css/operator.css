@@ -1,258 +1,261 @@
 /* 🛒 Atacadão Online - Advanced Operator Dashboard Styles */
 
 :root {
-    --primary-deep: #006d37;
-    --surface-bright: #f4fbf1;
-    --status-info-bg: #e0f7fa;
-    --total-bg: #fef08a;
+	--primary-deep: #006d37;
+	--surface-bright: #f4fbf1;
+	--status-info-bg: #e0f7fa;
+	--total-bg: #fef08a;
 }
 
 body.operator-page {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-page);
-    min-height: 100vh;
+	font-family: "Inter", sans-serif;
+	background-color: var(--bg-page);
+	min-height: 100vh;
 }
 
 /* 🏷️ Header Branding */
 .operator-header {
-    background: white;
-    border-bottom: 4px solid var(--brand-primary);
-    padding: 1.5rem 2rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-base);
-    margin-bottom: 2rem;
+	background: white;
+	border-bottom: 4px solid var(--brand-primary);
+	padding: 1.5rem 2rem;
+	border-radius: 1rem;
+	box-shadow: var(--shadow-base);
+	margin-bottom: 2rem;
 }
 
 .brand-lockup {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    transition: opacity 0.2s;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	transition: opacity 0.2s;
 }
 
 .brand-lockup:hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 
 .brand-logo-a {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--brand-secondary);
-    line-height: 1;
+	font-size: 2.5rem;
+	font-weight: 900;
+	color: var(--brand-secondary);
+	line-height: 1;
 }
 
 .brand-text-main {
-    font-size: 1.75rem;
-    font-weight: 900;
-    color: var(--brand-primary);
-    line-height: 1;
+	font-size: 1.75rem;
+	font-weight: 900;
+	color: var(--brand-primary);
+	line-height: 1;
 }
 
 .brand-text-sub {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--brand-secondary);
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: var(--brand-secondary);
 }
 
 .page-title {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--text-main);
-    text-transform: uppercase;
-    margin: 0;
+	font-size: 2rem;
+	font-weight: 800;
+	color: var(--text-main);
+	text-transform: uppercase;
+	margin: 0;
 }
 
 /* ℹ️ Context Bar */
 .context-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
 }
 
 .context-info-card {
-    background: white;
-    padding: 1rem 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-base);
-    flex: 1;
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    border: 1px solid rgba(0,0,0,0.05);
+	background: white;
+	padding: 1rem 1.5rem;
+	border-radius: 0.75rem;
+	box-shadow: var(--shadow-base);
+	flex: 1;
+	display: flex;
+	gap: 2rem;
+	align-items: center;
+	border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .context-item {
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.9rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 0.9rem;
 }
 
 .context-label {
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    margin-right: 0.5rem;
+	color: var(--text-muted);
+	font-size: 0.75rem;
+	margin-right: 0.5rem;
 }
 
 .status-badge-info {
-    background: white;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-base);
-    border-left: 6px solid #0dcaf0;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 500;
+	background: white;
+	padding: 0.75rem 1rem;
+	border-radius: 0.75rem;
+	box-shadow: var(--shadow-base);
+	border-left: 6px solid #0dcaf0;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-size: 0.875rem;
+	font-weight: 500;
 }
 
 /* ➕ Input Section */
 .input-section {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-base);
-    margin-bottom: 2rem;
+	background: white;
+	padding: 1.5rem;
+	border-radius: 1rem;
+	box-shadow: var(--shadow-base);
+	margin-bottom: 2rem;
 }
 
 .search-container {
-    position: relative;
-    flex: 1;
+	position: relative;
+	flex: 1;
 }
 
 .search-icon-inside {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    font-size: 1.25rem;
+	position: absolute;
+	left: 1rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--text-muted);
+	font-size: 1.25rem;
 }
 
 .operator-input {
-    padding: 0.75rem 1rem 0.75rem 2.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background-color: var(--surface-bright);
-    font-weight: 500;
-    transition: all 0.2s;
+	padding: 0.75rem 1rem 0.75rem 2.75rem;
+	border-radius: 0.75rem;
+	border: 1px solid #e2e8f0;
+	background-color: var(--surface-bright);
+	font-weight: 500;
+	transition: all 0.2s;
 }
 
 .operator-input:focus {
-    border-color: var(--brand-primary);
-    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
-    outline: none;
+	border-color: var(--brand-primary);
+	box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+	outline: none;
 }
 
 /* 📋 Operational Table */
 .table-card {
-    background: white;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-base);
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.05);
+	background: white;
+	border-radius: 1rem;
+	box-shadow: var(--shadow-base);
+	overflow: hidden;
+	border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .operator-table thead {
-    background-color: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
+	background-color: #f8fafc;
+	border-bottom: 1px solid #e2e8f0;
 }
 
 .operator-table th {
-    padding: 1rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--text-main);
+	padding: 1rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: var(--text-main);
 }
 
 .operator-table td {
-    padding: 0.75rem 1rem;
-    vertical-align: middle;
+	padding: 0.75rem 1rem;
+	vertical-align: middle;
 }
 
 .row-highlight {
-    background-color: rgba(254, 240, 138, 0.15);
+	background-color: rgba(254, 240, 138, 0.15);
 }
 
 .font-barcode {
-    font-family: 'Libre Barcode 39', cursive;
-    font-size: 2.5rem;
-    line-height: 1;
+	display: flex;
+	justify-content: safely center;
+	font-family: "Libre Barcode 39", cursive;
+	font-size: 3rem;
+	line-height: 2;
 }
 
 /* 💰 Table Footer / Totals */
 .table-footer-stats {
-    background-color: #f8fafc;
-    padding: 1.5rem;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+	background-color: #f8fafc;
+	padding: 1.5rem;
+	border-top: 1px solid #e2e8f0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 1.5rem;
 }
 
 .total-display-box {
-    background-color: var(--total-bg);
-    padding: 0.5rem 1.5rem;
-    border: 1px solid #e2e8f0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+	background-color: var(--total-bg);
+	padding: 0.5rem 1.5rem;
+	border: 1px solid #e2e8f0;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
 }
 
 .total-label {
-    font-weight: 800;
-    font-size: 1.125rem;
-    text-transform: uppercase;
+	font-weight: 800;
+	font-size: 1.125rem;
+	text-transform: uppercase;
 }
 
 .total-value {
-    font-size: 1.75rem;
-    font-weight: 900;
+	font-size: 1.75rem;
+	font-weight: 900;
 }
 
 /* 🖋️ Editable Price Input (Revised) */
 .price-input {
-    border: 1px solid transparent;
-    background: transparent;
-    font-weight: 700;
-    width: 90px;
-    padding: 2px 4px;
-    border-radius: 4px;
-    text-align: right;
+	border: 1px solid transparent;
+	background: transparent;
+	font-weight: 700;
+	width: 90px;
+	padding: 2px 4px;
+	border-radius: 4px;
+	text-align: right;
 }
 
-.price-input:hover, .price-input:focus {
-    border-color: var(--brand-primary);
-    background: white;
+.price-input:hover,
+.price-input:focus {
+	border-color: var(--brand-primary);
+	background: white;
 }
 
 /* 🔍 Search Dropdown (Revised) */
 .search-results {
-    position: absolute;
-    z-index: 1050;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    border-radius: 0 0 0.75rem 0.75rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    border: 1px solid #e2e8f0;
-    border-top: none;
-    max-height: 400px;
-    overflow-y: auto;
+	position: absolute;
+	z-index: 1050;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: white;
+	border-radius: 0 0 0.75rem 0.75rem;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	border: 1px solid #e2e8f0;
+	border-top: none;
+	max-height: 450px;
+	overflow-y: auto;
 }
 
 /* 📄 PDF Export Template */
 #pdf-export-container {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
-    width: 850px;
-    background: white;
-    padding: 40px;
+	position: absolute;
+	left: -9999px;
+	top: -9999px;
+	width: 850px;
+	background: white;
+	padding: 40px;
 }

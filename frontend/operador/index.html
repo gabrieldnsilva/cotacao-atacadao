@@ -1,184 +1,528 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atacadão Cotações - Operação</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
-    <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/operator.css">
-</head>
-<body class="operator-page">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="./assets/fav-Icon.webp" />
+		<title>Atacadão Cotações - Operação</title>
 
-    <main class="container-fluid p-4 md:p-5 max-w-[1440px] mx-auto">
-        
-        <!-- Header Branding -->
-        <header class="operator-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-4">
-            <a href="/admin/index.html" class="brand-lockup">
-                <div class="brand-logo-a">A</div>
-                <div class="d-flex flex-column">
-                    <span class="brand-text-main">ATACADÃO</span>
-                    <span class="brand-text-sub">Cotações</span>
-                </div>
-            </a>
-            <h1 class="page-title">PEDIDO PARA FATURAR</h1>
-        </header>
+		<!-- Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap"
+			rel="stylesheet" />
 
-        <!-- Context Bar -->
-        <div class="context-bar">
-            <div class="context-info-card">
-                <div class="context-item"><span class="context-label">CLIENTE:</span> <span id="client-name">Supermercado Central Ltda</span></div>
-                <div class="context-item"><span class="context-label">QUANTIDADE CUPOM:</span> 1</div>
-                <div class="context-item"><span class="context-label">DATA:</span> <span id="current-date"></span></div>
-            </div>
-            <div class="status-badge-info">
-                <ion-icon name="information-circle" class="text-info" style="font-size: 1.5rem;"></ion-icon>
-                <span id="status-text">Aguardando inserção de itens.</span>
-            </div>
-        </div>
+		<!-- Icons -->
+		<script
+			type="module"
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+		<script
+			nomodule
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-        <!-- Input Area Section -->
-        <section class="input-section">
-            <form id="add-item-form" class="row g-4 align-items-end">
-                <div class="col-md-8">
-                    <label class="form-label font-weight-bold text-uppercase small">Código (MERC) / Busca por Nome</label>
-                    <div class="search-container">
-                        <ion-icon name="search-outline" class="search-icon-inside"></ion-icon>
-                        <input type="text" id="product-search" class="form-control form-control-lg operator-input" 
-                               placeholder="Ex: 7891010101010" 
-                               autocomplete="off"
-                               aria-label="Buscar produtos"
-                               aria-autocomplete="list"
-                               aria-expanded="false"
-                               aria-haspopup="listbox">
-                        <div id="search-results" class="search-results" role="listbox"></div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label font-weight-bold text-uppercase small">Quantidade</label>
-                    <input type="number" id="quick-qty" class="form-control form-control-lg text-center font-weight-bold operator-input" style="padding-left: 1rem;" value="1" min="1">
-                </div>
-                <div class="col-md-2">
-                    <button type="button" id="clear-quotation" class="btn btn-outline-danger w-100 py-3 d-flex align-items-center justify-content-center gap-2 font-weight-bold">
-                        <ion-icon name="trash-outline"></ion-icon>
-                        LIMPAR
-                    </button>
-                </div>
-            </form>
-        </section>
+		<!-- CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link rel="stylesheet" href="../assets/css/global.css" />
+		<link rel="stylesheet" href="../assets/css/operator.css" />
+	</head>
+	<body class="operator-page">
+		<main class="container-fluid p-4 md:p-5 max-w-[1440px] mx-auto">
+			<!-- Header Branding -->
+			<header
+				class="operator-header d-flex flex-column flex-md-row align-items-center justify-content-between gap-4">
+				<a href="/admin/index.html" class="brand-lockup">
+					<div class="brand-logo-a">A</div>
+					<div class="d-flex flex-column">
+						<span class="brand-text-main">ATACADÃO</span>
+						<span class="brand-text-sub">Cotações</span>
+					</div>
+				</a>
+				<h1 class="page-title">PEDIDO PARA FATURAR</h1>
+			</header>
 
-        <!-- Operational Table Section -->
-        <section class="table-card">
-            <div class="table-responsive">
-                <table class="table table-hover operator-table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>MERC</th>
-                            <th>DIG</th>
-                            <th>DESCRIÇÃO</th>
-                            <th class="text-center">EMBALAGEM</th>
-                            <th class="text-center" style="width: 120px;">QTD VENDA</th>
-                            <th class="text-center" style="width: 140px;">VALOR UNIT.</th>
-                            <th class="text-right" style="width: 140px;">R$ TOTAL</th>
-                            <th class="text-center">CÓD. BARRAS</th>
-                            <th class="text-center">AÇÕES</th>
-                        </tr>
-                    </thead>
-                    <tbody id="quotation-body">
-                        <!-- Items injected here -->
-                    </tbody>
-                </table>
-            </div>
+			<!-- Context Bar -->
+			<div class="context-bar">
+				<div class="context-info-card">
+					<div class="context-item">
+						<span class="context-label">CLIENTE:</span>
+						<input
+							type="text"
+							id="client-name-input"
+							class="border-0 border-bottom bg-transparent font-weight-bold uppercase"
+							style="outline: none; min-width: 250px"
+							value="" />
+					</div>
+					<div class="context-item">
+						<span class="context-label">QUANTIDADE CUPOM:</span> 1
+					</div>
+					<div class="context-item">
+						<span class="context-label">DATA:</span>
+						<span id="current-date"></span>
+					</div>
+				</div>
+				<div class="status-badge-info">
+					<ion-icon
+						name="information-circle"
+						class="text-info"
+						style="font-size: 1.5rem"></ion-icon>
+					<span id="status-text">Aguardando inserção de itens.</span>
+				</div>
+			</div>
 
-            <!-- Table Footer / Totals -->
-            <div class="table-footer-stats">
-                <div class="d-flex gap-3">
-                    <span class="badge bg-light text-dark border p-2 text-uppercase" style="letter-spacing: 0.5px;"><span id="items-count">0</span> Itens</span>
-                    <span class="badge bg-light text-dark border p-2 text-uppercase" style="letter-spacing: 0.5px;"><span id="units-count">0</span> Unidades Totais</span>
-                </div>
-                
-                <div class="d-flex align-items-center gap-4">
-                    <div class="total-display-box rounded">
-                        <span class="total-label">TOTAL:</span>
-                        <span id="total-row" class="total-value">R$ 0,00</span>
-                    </div>
-                    <button id="generate-pdf" class="btn btn-action btn-lg px-5 py-3 d-flex align-items-center gap-2">
-                        <ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon>
-                        GERAR PDF PARA FATURAMENTO
-                    </button>
-                </div>
-            </div>
-        </section>
+			<!-- Input Area Section -->
+			<section class="input-section">
+				<form id="add-item-form" class="row g-4 align-items-end">
+					<div class="col-md-8">
+						<label
+							class="form-label font-weight-bold text-uppercase small"
+							>Código (MERC) / Busca por Nome</label
+						>
+						<div class="search-container">
+							<ion-icon
+								name="search-outline"
+								class="search-icon-inside"></ion-icon>
+							<input
+								type="text"
+								id="product-search"
+								class="form-control form-control-lg operator-input"
+								placeholder="Ex: 7891010101010"
+								autocomplete="off"
+								aria-label="Buscar produtos"
+								aria-autocomplete="list"
+								aria-expanded="false"
+								aria-haspopup="listbox" />
+							<div
+								id="search-results"
+								class="search-results"
+								role="listbox"></div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<label
+							class="form-label font-weight-bold text-uppercase small"
+							>Quantidade</label
+						>
+						<input
+							type="number"
+							id="quick-qty"
+							class="form-control form-control-lg text-center font-weight-bold operator-input"
+							style="padding-left: 1rem"
+							value="1"
+							min="1" />
+					</div>
+					<div class="col-md-2">
+						<button
+							type="button"
+							id="clear-quotation"
+							class="btn btn-outline-danger w-100 py-3 d-flex align-items-center justify-content-center gap-2 font-weight-bold">
+							<ion-icon name="trash-outline"></ion-icon>
+							LIMPAR
+						</button>
+					</div>
+				</form>
+			</section>
 
-    </main>
+			<!-- Operational Table Section -->
+			<section class="table-card">
+				<div class="table-responsive">
+					<table
+						class="table table-hover operator-table align-middle mb-0">
+						<thead>
+							<tr>
+								<th>MERC</th>
+								<th>DIG</th>
+								<th>DESCRIÇÃO</th>
+								<th class="text-center">EMBALAGEM</th>
+								<th class="text-center" style="width: 120px">
+									QTD VENDA
+								</th>
+								<th class="text-center" style="width: 140px">
+									VALOR UNIT.
+								</th>
+								<th class="text-right" style="width: 140px">
+									R$ TOTAL
+								</th>
+								<th class="text-center">CÓD. BARRAS</th>
+								<th class="text-center">AÇÕES</th>
+							</tr>
+						</thead>
+						<tbody id="quotation-body">
+							<!-- Items injected here -->
+						</tbody>
+					</table>
+				</div>
 
-    <!-- PDF Hidden Template -->
-    <div id="pdf-export-container">
-        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-success border-4 pb-3">
-            <div class="d-flex align-items-center gap-3">
-                <div style="font-size: 2.5rem; font-weight: 900; color: #db7612;">A</div>
-                <div class="d-flex flex-column">
-                    <span style="font-size: 1.5rem; font-weight: 900; color: #27ae60;">ATACADÃO</span>
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #db7612;">Cotações</span>
-                </div>
-            </div>
-            <h2 style="font-weight: 800; text-transform: uppercase; margin: 0;">PEDIDO PARA FATURAR</h2>
-        </div>
-        
-        <div class="mb-4 p-3 border rounded d-flex gap-5 text-uppercase small font-weight-bold bg-light">
-            <span>CLIENTE: <span id="pdf-client">Supermercado Central Ltda</span></span>
-            <span>DATA: <span id="pdf-date"></span> <span id="pdf-time"></span></span>
-        </div>
+				<!-- Table Footer / Totals -->
+				<div class="table-footer-stats">
+					<div class="d-flex gap-3">
+						<span
+							class="badge bg-light text-dark border p-2 text-uppercase"
+							style="letter-spacing: 0.5px"
+							><span id="items-count">0</span> Itens</span
+						>
+						<span
+							class="badge bg-light text-dark border p-2 text-uppercase"
+							style="letter-spacing: 0.5px"
+							><span id="units-count">0</span> Unidades
+							Totais</span
+						>
+					</div>
 
-        <table class="table table-bordered border-dark table-sm small">
-            <thead class="table-light">
-                <tr class="text-uppercase" style="font-size: 10px;">
-                    <th>MERC</th>
-                    <th>DIG</th>
-                    <th>Descrição</th>
-                    <th>Embalagem</th>
-                    <th class="text-center">Qtd</th>
-                    <th class="text-center">Valor</th>
-                    <th class="text-right">Total</th>
-                    <th class="text-center">Cód. Barras</th>
-                </tr>
-            </thead>
-            <tbody id="pdf-body"></tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="6" class="text-end font-weight-bold bg-light">TOTAL DO PEDIDO:</td>
-                    <td id="pdf-total" class="text-right font-weight-bold" style="background: #fef08a;"></td>
-                    <td class="bg-light"></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+					<div class="d-flex align-items-center gap-4">
+						<div class="total-display-box rounded">
+							<span class="total-label">TOTAL:</span>
+							<span id="total-row" class="total-value"
+								>R$ 0,00</span
+							>
+						</div>
+						<button
+							id="generate-pdf"
+							class="btn btn-action btn-lg px-5 py-3 d-flex align-items-center gap-2">
+							<ion-icon
+								name="document-text-outline"
+								style="font-size: 1.5rem"></ion-icon>
+							GERAR PDF PARA FATURAMENTO
+						</button>
+					</div>
+				</div>
+			</section>
+		</main>
 
-    <!-- JS Libs -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- PDF Export Libs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <!-- App Logic -->
-    <script src="../assets/js/operator.js"></script>
+		<!-- PDF Hidden Template (Advanced Corporate Design) -->
+		<div
+			id="pdf-export-container"
+			style="font-family: &quot;Inter&quot;, sans-serif; color: #2c3e50">
+			<!-- Header: Branding & Title -->
+			<div
+				style="
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					border-bottom: 4px solid #27ae60;
+					padding-bottom: 20px;
+					margin-bottom: 25px;
+				">
+				<div style="display: flex; align-items: center; gap: 15px">
+					<div
+						style="
+							font-size: 3.5rem;
+							font-weight: 900;
+							color: #db7612;
+							line-height: 1;
+						">
+						A
+					</div>
+					<div style="display: flex; flex-direction: column">
+						<span
+							style="
+								font-size: 2rem;
+								font-weight: 900;
+								color: #27ae60;
+								line-height: 1;
+								letter-spacing: -1px;
+							"
+							>ATACADÃO</span
+						>
+						<span
+							style="
+								font-size: 0.9rem;
+								font-weight: 700;
+								color: #db7612;
+								text-transform: uppercase;
+								letter-spacing: 2px;
+							"
+							>Cotações Online</span
+						>
+					</div>
+				</div>
+				<div style="text-align: right">
+					<h2
+						style="
+							margin: 0;
+							font-weight: 900;
+							color: #1a1a1a;
+							font-size: 1.5rem;
+						">
+						FATURAMENTO
+					</h2>
+					<p
+						style="
+							margin: 0;
+							color: #6c757d;
+							font-size: 0.8rem;
+							font-weight: 600;
+						">
+						DOCUMENTO DE COTAÇÃO INTERNA
+					</p>
+				</div>
+			</div>
 
-    <script>
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR', {
-            day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-        });
-    </script>
-</body>
+			<!-- Info Bar -->
+			<div
+				style="
+					display: grid;
+					grid-template-columns: 1.5fr 1fr;
+					gap: 20px;
+					margin-bottom: 30px;
+				">
+				<div
+					style="
+						background: #f8fafc;
+						padding: 15px;
+						border-radius: 8px;
+						border: 1px solid #e2e8f0;
+					">
+					<label
+						style="
+							display: block;
+							font-size: 0.65rem;
+							font-weight: 800;
+							color: #27ae60;
+							text-transform: uppercase;
+							margin-bottom: 5px;
+						"
+						>Cliente / Razão Social</label
+					>
+					<div
+						id="pdf-client"
+						style="
+							font-size: 1.1rem;
+							font-weight: 700;
+							text-transform: uppercase;
+						">
+						-
+					</div>
+				</div>
+				<div
+					style="
+						background: #f8fafc;
+						padding: 15px;
+						border-radius: 8px;
+						border: 1px solid #e2e8f0;
+						display: flex;
+						justify-content: space-between;
+					">
+					<div>
+						<label
+							style="
+								display: block;
+								font-size: 0.65rem;
+								font-weight: 800;
+								color: #27ae60;
+								text-transform: uppercase;
+								margin-bottom: 5px;
+							"
+							>Data de Emissão</label
+						>
+						<div
+							id="pdf-date"
+							style="font-size: 0.9rem; font-weight: 700">
+							-
+						</div>
+					</div>
+					<div style="text-align: right">
+						<label
+							style="
+								display: block;
+								font-size: 0.65rem;
+								font-weight: 800;
+								color: #27ae60;
+								text-transform: uppercase;
+								margin-bottom: 5px;
+							"
+							>Hora</label
+						>
+						<div
+							id="pdf-time"
+							style="font-size: 0.9rem; font-weight: 700">
+							-
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Items Table -->
+			<table
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					margin-bottom: 30px;
+				">
+				<thead>
+					<tr style="background: #2c3e50; color: white">
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: left;
+								font-size: 0.7rem;
+								font-weight: 700;
+								border-radius: 6px 0 0 0;
+							">
+							MERC
+						</th>
+						<th
+							style="
+								padding: 12px 5px;
+								text-align: center;
+								font-size: 0.7rem;
+								font-weight: 700;
+							">
+							DIG
+						</th>
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: left;
+								font-size: 0.7rem;
+								font-weight: 700;
+							">
+							DESCRIÇÃO DO PRODUTO
+						</th>
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: center;
+								font-size: 0.7rem;
+								font-weight: 700;
+							">
+							UNID
+						</th>
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: center;
+								font-size: 0.7rem;
+								font-weight: 700;
+							">
+							QTD
+						</th>
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: right;
+								font-size: 0.7rem;
+								font-weight: 700;
+							">
+							PREÇO UNIT.
+						</th>
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: right;
+								font-size: 0.7rem;
+								font-weight: 700;
+							">
+							SUBTOTAL
+						</th>
+						<th
+							style="
+								padding: 12px 10px;
+								text-align: center;
+								font-size: 0.7rem;
+								font-weight: 700;
+								border-radius: 0 6px 0 0;
+							">
+							CÓD. BARRAS
+						</th>
+					</tr>
+				</thead>
+				<tbody id="pdf-body" style="font-size: 0.8rem">
+					<!-- Injected via JS -->
+				</tbody>
+				<tfoot>
+					<tr style="background: #f1f5f9; font-size: 0.9rem">
+						<td
+							colspan="6"
+							style="
+								padding: 20px 10px;
+								text-align: right;
+								font-weight: 800;
+								font-size: 1rem;
+								color: #475569;
+							">
+							TOTAL GERAL DO PEDIDO:
+						</td>
+						<td
+							id="pdf-total"
+							style="
+								padding: 20px 10px;
+								text-align: right;
+								font-weight: 900;
+								font-size: 1rem;
+								color: #db7612;
+								background: #fef08a;
+							"></td>
+						<td
+							style="
+								background: #fef08a;
+								border-radius: 0 0 6px 0;
+							"></td>
+					</tr>
+				</tfoot>
+			</table>
+
+			<!-- Footer: Legal & Verification -->
+			<div
+				style="
+					margin-top: 50px;
+					border-top: 1px dashed #cbd5e1;
+					padding-top: 20px;
+					display: flex;
+					justify-content: space-between;
+					align-items: flex-start;
+				">
+				<div style="max-width: auto">
+					<h4
+						style="
+							margin: 0 0 5px 0;
+							font-size: 1rem;
+							font-weight: 800;
+							color: #27ae60;
+							text-transform: uppercase;
+						">
+						Observações Importantes
+					</h4>
+					<p
+						style="
+							margin: 0;
+							font-size: 0.85rem;
+							color: #64748b;
+							line-height: 1.4;
+						">
+						Esta cotação tem validade para o dia de emissão. Os
+						preços e disponibilidade de estoque podem sofrer
+						alterações sem aviso prévio. Documento gerado
+						eletronicamente pelo
+						<span class="fw-bold">Cotação Online - Atacadão</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- JS Libs -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+		<!-- PDF Export Libs -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+		<!-- App Logic -->
+		<script src="../assets/js/operator.js"></script>
+
+		<script>
+			document.getElementById("current-date").innerText =
+				new Date().toLocaleDateString("pt-BR", {
+					day: "2-digit",
+					month: "short",
+					year: "numeric",
+					hour: "2-digit",
+					minute: "2-digit",
+				});
+		</script>
+	</body>
 </html>

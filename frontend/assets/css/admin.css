@@ -1,55 +1,240 @@
-/* 🛡️ Atacadão Online - Admin Panel Styles */
+/* 🛡️ Atacadão Online - Advanced Admin Panel Styles */
 
-.login-container {
-    max-width: 420px;
-    margin: 12vh auto;
+:root {
+	--sidebar-width: 260px;
+	--navbar-height: 64px;
 }
 
-#admin-dashboard {
-    display: none;
-    margin-top: 8vh;
+body.admin-page {
+	font-family: "Inter", sans-serif;
+	background-color: var(--bg-page);
+	height: 100vh;
+	overflow: hidden;
+}
+
+/* 🔐 Login Section */
+.login-container {
+	max-width: 420px;
+	margin: 15vh auto;
 }
 
 #login-section {
-    display: none; /* Managed by JS */
+	display: none; /* Managed by JS */
 }
 
-/* ☁️ Upload Area Styling */
+/* 🏗️ Main Layout */
+#admin-dashboard {
+	display: none; /* Managed by JS */
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.dashboard-wrapper {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+}
+
+/* 🔝 Top Navbar */
+.admin-navbar {
+	height: var(--navbar-height);
+	background: #ffffff;
+	border-bottom: 1px solid #e2e8f0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 1.5rem;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1040;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand-admin {
+	font-size: 1.25rem;
+	font-weight: 900;
+	color: var(--primary-deep, #006d37);
+	letter-spacing: -0.5px;
+}
+
+/* ⬅️ Sidebar */
+.admin-sidebar {
+	width: var(--sidebar-width);
+	background: #f8fafc;
+	border-right: 1px solid #e2e8f0;
+	display: flex;
+	flex-direction: column;
+	padding-top: var(--navbar-height);
+	transition: all 0.3s ease;
+}
+
+.sidebar-profile {
+	padding: 1.5rem;
+	border-bottom: 1px solid #e2e8f0;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.profile-img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #cbd5e1;
+	overflow: hidden;
+}
+
+.profile-info {
+	line-height: 1.2;
+}
+
+.profile-name {
+	font-weight: 700;
+	font-size: 0.875rem;
+	color: var(--text-main);
+}
+
+.profile-role {
+	font-size: 0.75rem;
+	color: var(--text-muted);
+}
+
+.sidebar-nav {
+	flex: 1;
+	padding: 1rem 0;
+}
+
+.nav-link-admin {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.75rem 1.5rem;
+	color: #475569;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 0.875rem;
+	transition: all 0.2s;
+}
+
+.nav-link-admin:hover {
+	color: var(--brand-primary);
+	background: #f1f5f9;
+}
+
+.nav-link-admin.active {
+	color: var(--brand-primary);
+	background: #ecfdf5;
+	border-right: 4px solid var(--brand-primary);
+	font-weight: 600;
+}
+
+.sidebar-footer {
+	padding: 1rem;
+	border-top: 1px solid #e2e8f0;
+}
+
+/* 📂 Main Content Area */
+.admin-main {
+	flex: 1;
+	margin-left: var(--sidebar-width);
+	padding-top: var(--navbar-height);
+	overflow-y: auto;
+	background-color: var(--bg-page);
+}
+
+.admin-content-inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+/* 📊 Summary Cards */
+.stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.stat-card {
+	background: white;
+	padding: 1.5rem;
+	border-radius: var(--border-radius-base);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	box-shadow: var(--shadow-base);
+	border-left: 4px solid var(--brand-primary);
+}
+
+.stat-card.info {
+	border-left-color: #0dcaf0;
+}
+
+.stat-label {
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	letter-spacing: 0.05em;
+	margin-bottom: 0.5rem;
+}
+
+.stat-value {
+	font-size: 1.5rem;
+	font-weight: 800;
+	color: var(--text-main);
+}
+
+/* ☁️ Upload Area Styling (Enhanced) */
 .upload-area {
-    border: 2px dashed rgba(39, 174, 96, 0.4);
-    background-color: #fcfdfc;
-    padding: 3rem;
-    text-align: center;
-    border-radius: var(--border-radius-base);
-    cursor: pointer;
-    transition: all 0.3s ease;
+	border: 2px dashed rgba(39, 174, 96, 0.4);
+	background-color: #fcfdfc;
+	padding: 3rem;
+	text-align: center;
+	border-radius: var(--border-radius-base);
+	cursor: pointer;
+	transition: all 0.3s ease;
+	min-height: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .upload-area:hover {
-    border-color: var(--brand-primary);
-    background-color: #f1f9f4;
-    transform: translateY(-2px);
+	border-color: var(--brand-primary);
+	background-color: #f1f9f4;
+	transform: translateY(-2px);
 }
 
-.upload-area i {
-    color: var(--brand-primary);
-    opacity: 0.8;
+.upload-icon {
+	font-size: 3rem;
+	color: var(--brand-primary);
+	margin-bottom: 1rem;
 }
 
 /* ⏳ Loading Overlay */
 .loading-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(255,255,255,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(4px);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.85);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	backdrop-filter: blur(4px);
 }
 
-.loading-overlay .spinner-border {
-    width: 3rem;
-    height: 3rem;
-    border-width: 0.3em;
+@media (max-width: 768px) {
+	.admin-sidebar {
+		display: none;
+	}
+	.admin-main {
+		margin-left: 0;
+	}
 }
